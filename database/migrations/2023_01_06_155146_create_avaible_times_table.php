@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('avaible_times', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('expert_id')
+                ->constrained('people')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->date('day');
+            $table->time('time');
+            $table->time('period');
+            $table->unique(['day','time','expert_id']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('avaible_times');
+    }
+};
